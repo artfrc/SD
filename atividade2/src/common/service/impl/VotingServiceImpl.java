@@ -13,6 +13,8 @@ public class VotingServiceImpl extends UnicastRemoteObject implements IVotingSer
 
     @Override
     public void toVote(String voterName, String candidateName) throws RemoteException {
-        // implementação
+        System.out.println(">>> Receiving a vote....");
+        System.out.println(">>> Candidate:" + candidateName);
+        System.out.println(">>> Voter: " + voterName + "\n====================\n");
     }
 }
