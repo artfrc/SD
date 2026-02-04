@@ -2,19 +2,31 @@ package common.service.impl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+import java.util.Map;
 
 import common.service.IVotingService;
 
-public class VotingServiceImpl extends UnicastRemoteObject implements IVotingService {
+public class VotingServiceImpl extends UnicastRemoteObject
+        implements IVotingService {
+
+    private final Map<String,String> votes = new HashMap<>();
 
     public VotingServiceImpl() throws RemoteException {
         super();
     }
 
     @Override
-    public void toVote(String voterName, String candidateName) throws RemoteException {
-        System.out.println(">>> Receiving a vote....");
-        System.out.println(">>> Candidate:" + candidateName);
-        System.out.println(">>> Voter: " + voterName + "\n====================\n");
+    public synchronized void toVote(String voter, String candidate)
+            throws RemoteException {
+
+        votes.put(voter, candidate);
+
+        System.out.println("Vote received: " + voter + " -> " + candidate);
+    }
+
+    public Map<String,String> getVotes() {
+        return votes;
     }
 }
+
